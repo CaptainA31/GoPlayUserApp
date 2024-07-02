@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import Header from '../../components/Header';
 import trash from '../../assets/trash.png';
@@ -33,10 +34,8 @@ import { useFocusEffect } from '@react-navigation/core';
 import MyTabBar from '../../components/MyTabBar';
 import wallpaper from '../../assets/wallpaper.png';
 import { getAllFacilities } from '../../services/Booking';
-// import { useDispatch, useSelector } from 'react-redux';
 import FilterModal from './FilterModal';
 import { getAllSports } from '../../services/signin';
-// import { fetchFacility } from '../../redux/facilitySlice';
 import Star from 'react-native-star-view';
 
 const starStyle = {
@@ -50,12 +49,10 @@ const wait = timeout => {
 };
 
 const Book = ({ navigation, drawerAnimationStyle }) => {
-  // const reduxStore = useSelector(state => state?.facilityList);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [myFacilities, setMyFacility] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [searchLocation, setSearchLocation] = useState();
-  // const dispatch = useDispatch();
   const [sports, setSports] = useState([]);
   const [selectedSport, setSelectedSport] = useState([]);
 
@@ -65,20 +62,11 @@ const Book = ({ navigation, drawerAnimationStyle }) => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    // dispatch(fetchFacility());
-
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
   useFocusEffect(
     React.useCallback(() => {
-      // getAllFacilities().then((res)=> {
-      //     console.log(res.data.facilities)
-      //     setMyFacility(res.data.facilities)
-      // })
-      // if (!reduxStore.loading) {
-      //   setMyFacility(reduxStore.facilityList.facilities);
-      // }
       getAllFacilities().then(res => setMyFacility(res.data.facilities));
       return () => null;
     }, [navigation]),
@@ -91,9 +79,6 @@ const Book = ({ navigation, drawerAnimationStyle }) => {
   const handleSearchLocation = name => {
     if (selectedSport) {
       if (name) {
-        // const filterOut = reduxStore.facilityList.facilities.filter(element =>
-        //   element.location.name.toLowerCase().includes(name.toLowerCase()),
-        // );
         const filterOut = myFacilities.filter(element =>
           element.location.name.toLowerCase().includes(name.toLowerCase()),
         );
@@ -110,7 +95,6 @@ const Book = ({ navigation, drawerAnimationStyle }) => {
 
         setMyFacility(filterSports);
       } else {
-        // const onlySports = reduxStore.facilityList.facilities.filter(item => {
         const onlySports = myFacilities.filter(item => {
           let sportexist = item.availableSport.find(
             element => element._id == selectedSport,
@@ -128,15 +112,11 @@ const Book = ({ navigation, drawerAnimationStyle }) => {
     }
     if (name) {
       setModalVisible(false);
-      // const filterOut = reduxStore.facilityList.facilities.filter(element =>
-      //   element.location.name.toLowerCase().includes(name.toLowerCase()),
-      // );
       const filterOut = myFacilities.filter(element =>
         element.location.name.toLowerCase().includes(name.toLowerCase()),
       );
       setMyFacility(filterOut);
     } else {
-      // setMyFacility(reduxStore.facilityList.facilities);
       getAllFacilities().then(res => setMyFacility(res.data.facilities));
     }
     setModalVisible(false);
@@ -162,7 +142,6 @@ const Book = ({ navigation, drawerAnimationStyle }) => {
     setSelectedSport(null);
     setSearchLocation(null);
     setModalVisible(false);
-    // setMyFacility(reduxStore.facilityList.facilities);
     getAllFacilities().then(res => setMyFacility(res.data.facilities));
   };
 
@@ -173,7 +152,6 @@ const Book = ({ navigation, drawerAnimationStyle }) => {
           flex: 1,
           overflow: 'hidden',
           backgroundColor: 'white',
-          ...drawerAnimationStyle,
         }}>
         <Header
           onBack={onBack}
@@ -216,8 +194,7 @@ const Book = ({ navigation, drawerAnimationStyle }) => {
               }
               renderItem={({ item, index }) => {
                 return (
-                  <View
-                    style={styles.facilites}>
+                  <View style={styles.facilites}>
                     <Pressable
                       onPress={() =>
                         navigation.navigate('bookDetail', { facility: item })
@@ -330,7 +307,7 @@ const Book = ({ navigation, drawerAnimationStyle }) => {
                             contentContainerStyle={{
                               paddingRight: RFValue(20),
                             }}
-                            key={item => item.id}
+                            keyExtractor={item => item.id}
                             renderItem={({ item, index }) => {
                               return (
                                 <View style={styles.circle}>
