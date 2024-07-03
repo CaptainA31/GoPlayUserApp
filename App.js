@@ -9,6 +9,7 @@ import SignUp from './screens/signin/SignUp';
 import GetPhone from './screens/signup/GetPhone';
 import GetEmail from "./screens/signup/GetEmail";
 import OtpVerification from './screens/signin/OtpVerifcation';
+import HostActivity from "./screens/hostActivity/HostActivity";
 import Home from "./screens/home/Home";
 import Play from './screens/play/Play';
 import Book from './screens/book/book';
@@ -90,6 +91,7 @@ export default function App() {
         <Stack.Screen name="getPhone" component={GetPhone} />
         <Stack.Screen name="getEmail" component={GetEmail} />
         <Stack.Screen name="otp" component={OtpVerification} />
+        <Stack.Screen name="hostActivity" component={HostActivity} />
         <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
