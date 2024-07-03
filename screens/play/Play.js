@@ -10,7 +10,9 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
-  SafeAreaView
+  SafeAreaView,
+  Platform,
+  StatusBar
 } from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import Header from '../../components/Header';
@@ -174,7 +176,12 @@ const Play = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={screen}>
+    <SafeAreaView style={[screen,
+      {
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+      }]
+    } // {...drawerAnimationStyle}
+    >
       {/* <Header
           onBack={onBack}
           heading={'Play'}
@@ -428,7 +435,7 @@ const Play = ({navigation}) => {
 
       <View
         style={{
-          height: '16%',
+          height: '8%',
           position: 'absolute',
           bottom: 0,
           width: '100%',

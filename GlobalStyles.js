@@ -15,11 +15,16 @@ export const colors = {
 export const screen = {
     height : "100%",
     backgroundColor : "white",
-    overflow : "hidden"
+    overflow : "hidden",
+    resizeMode: "contain"
 }
 
 export const imageStyle = {
-    width : "100%" , height : "100%" , resizeMode : "contain"
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    // marginTop: 12,
+    marginLeft: -10
 }
 
 
