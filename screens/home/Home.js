@@ -11,7 +11,9 @@ import {
   FlatList,
   RefreshControl,
   Pressable,
-  SafeAreaView
+  SafeAreaView,
+  Platform,
+  StatusBar
 } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { colors, imageStyle, screen } from '../../GlobalStyles';
@@ -106,7 +108,11 @@ const Home = ({ drawerAnimationStyle, navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={[screen]} // {...drawerAnimationStyle}
+    <SafeAreaView style={[screen,
+        {
+          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        }]
+    } // {...drawerAnimationStyle}
     >
       <View style={{ height: '22%' }}>
         <View
@@ -270,9 +276,12 @@ const Home = ({ drawerAnimationStyle, navigation }) => {
             <ImageBackground
               source={lion}
               imageStyle={{
-                resizeMode: 'cover',
-                width: '60%',
+                resizeMode: 'contain',
+                width: '100%',
                 height: '100%',
+                marginLeft: -55,
+                borderBottomLeftRadius: RFValue(8),
+                borderTopLeftRadius: RFValue(8),
               }}
               style={{
                 backgroundColor: '#00F5A0',
@@ -283,8 +292,9 @@ const Home = ({ drawerAnimationStyle, navigation }) => {
                 marginBottom: RFValue(7),
                 borderRadius: RFValue(8),
                 overflow: 'visible',
-                marginTop: RFValue(10),
+                marginTop: RFValue(20),
               }}>
+                
               <View
                 style={{
                   width: '60%',
@@ -313,7 +323,7 @@ const Home = ({ drawerAnimationStyle, navigation }) => {
                   width: '50%',
                   height: '110%',
                   resizeMode: 'contain',
-                  marginBottom: RFValue(10),
+                  marginBottom: RFValue(12),
                   zIndex: 1,
                 }}
               />
@@ -425,6 +435,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
   },
+  
   menu: {
     backgroundColor: '#f7f7f7',
     flexDirection: 'row',

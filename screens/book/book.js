@@ -11,6 +11,7 @@ import {
   RefreshControl,
   SafeAreaView,
   StatusBar,
+  Platform,
 } from 'react-native';
 import Header from '../../components/Header';
 import trash from '../../assets/trash.png';
@@ -37,6 +38,7 @@ import { getAllFacilities } from '../../services/Booking';
 import FilterModal from './FilterModal';
 import { getAllSports } from '../../services/signin';
 import Star from 'react-native-star-view';
+import {screen} from '../../GlobalStyles';
 
 const starStyle = {
   width: 80,
@@ -146,7 +148,12 @@ const Book = ({ navigation, drawerAnimationStyle }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <SafeAreaView style={[screen,
+        {
+          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        }]
+      } // {...drawerAnimationStyle}
+    >
       <Animated.View
         style={{
           flex: 1,
