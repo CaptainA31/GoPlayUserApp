@@ -20,15 +20,15 @@ import MyTabBar from '../../components/MyTabBar';
 import {colors, screen} from '../../GlobalStyles';
 import {getAllSports} from '../../services/signin';
 import Games from '../../components/Games';
-// import {useDispatch, useSelector} from 'react-redux';
-// import {fetchPlayNow} from '../../redux/playNowSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchPlayNow} from '../../redux/playNowSlice';
 import {
   joinBookingGame,
   joinGame,
   leaveBookingGame,
   leaveGame,
 } from '../../services/HostActivity';
-// import {fetchMyGames} from '../../redux/myGamesSlice';
+import {fetchMyGames} from '../../redux/myGamesSlice';
 import Loader from '../../components/Loader';
 import wallpaper from '../../assets/wallpaper.png';
 import FilterModal from './FilterModal';
@@ -39,6 +39,13 @@ import avatar from '../../assets/avatar.png';
 import messages from '../../assets/messages.png';
 import lion from '../../assets/lion-bg.png';
 import player from '../../assets/player.png';
+
+
+import activity from '../../assets/activity.png';
+import groups from '../../assets/groups.png';
+import offer from '../../assets/offers.png';
+import community from '../../assets/community.png';
+import leaderboardIcon from '../../assets/leaderboard.png';
 
 const wait = timeout => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -61,9 +68,18 @@ const Play = ({navigation}) => {
   const [alertBox, setAlertBox] = useState(false);
   const [title, setTitle] = useState('');
 
+  const cardData = [
+    { title: 'Host Activity', icon: activity, navigation: 'hostActivity' },
+    { title: 'Groups', icon: groups, navigation: 'groups' },
+    { title: 'Offers', icon: offer, navigation: 'offers' },
+    { title: 'Community', icon: community, navigation: 'community' },
+    { title: 'LeaderBoard', icon: leaderboardIcon, navigation: 'leaderBoard' },
+  ];
+
   const onBack = () => {
     navigation.navigate('HOME');
   };
+  
 
   useEffect(() => {
     getAllSports().then(res => {
@@ -128,19 +144,19 @@ const Play = ({navigation}) => {
     if (item) {
       if (selectedSport == item) {
         setSelectedSport(null);
-        // setPlayListFilter(playList.myGamesList);
+        setPlayListFilter(playList.myGamesList);
         return;
       }
       if (item.id == 0) {
         setSelectedSport(item);
-        // setPlayListFilter(playList.myGamesList);
+        setPlayListFilter(playList.myGamesList);
         return;
       }
       setSelectedSport(item);
-      // const filterOut = playList.myGamesList.filter(
-      //   element => element.selectedSport._id == item._id,
-      // );
-      // setPlayListFilter(filterOut);
+      const filterOut = playList.myGamesList.filter(
+        element => element.selectedSport._id == item._id,
+      );
+      setPlayListFilter(filterOut);
     }
   };
 
@@ -159,27 +175,24 @@ const Play = ({navigation}) => {
   const handleSearchLocation = name => {
     if (name) {
       setModalVisible(false);
-      // const filterOut = playList.myGamesList.filter(element =>
-      //   element.location.name.toLowerCase().includes(name.toLowerCase()),
-      // );
-      // setPlayListFilter(filterOut);
+      const filterOut = playList.myGamesList.filter(element =>
+        element.location.name.toLowerCase().includes(name.toLowerCase()),
+      );
+      setPlayListFilter(filterOut);
 
-      // if (filterOut.length > 0){
-      //     setPlayListFilter(filterOut)
-      // }else {
-      //     setPlayListFilter(playList.myGamesList)
-      // }
+      if (filterOut.length > 0){
+          setPlayListFilter(filterOut)
+      }else {
+          setPlayListFilter(playList.myGamesList)
+      }
     } else {
-      // setPlayListFilter(playList.myGamesList);
+      setPlayListFilter(playList.myGamesList);
     }
     setModalVisible(false);
   };
 
   return (
-    <SafeAreaView style={[screen,
-      {
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-      }]
+    <SafeAreaView style={[screen]
     } // {...drawerAnimationStyle}
     >
       {/* <Header
@@ -251,6 +264,9 @@ const Play = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
+
+      
+
       <View style={styles.listContainer}>
   {modalVisible ? (
     <FilterModal
@@ -308,18 +324,22 @@ const Play = ({navigation}) => {
         <ImageBackground
           source={lion}
           imageStyle={{
-            resizeMode: 'cover',
-            width: '60%',
+            resizeMode: 'contain',
+            width: '100%',
             height: '100%',
-            // zIndex: 9999,
+            marginLeft: -66,
+            borderBottomLeftRadius: RFValue(150),
+            borderTopLeftRadius: RFValue(150),
           }}
           style={{
-            //#00F5A0', '#00D9F5'
             backgroundColor: '#00F5A0',
             height: RFValue(130),
             flexDirection: 'row',
-            alignItems: 'center', // Align items vertically
+            alignItems: 'center',
             justifyContent: 'space-between',
+            marginBottom: RFValue(7),
+            borderRadius: RFValue(8),
+            overflow: 'visible',
           }}>
           <View
             style={{
@@ -475,8 +495,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#EDEDED',
     marginHorizontal: '10%',
     borderRadius: 15,
-    paddingHorizontal: 5,
-    paddingVertical: 5,
+    paddingHorizontal: 6,
+    paddingVertical: 6,
   },
   tab: {
     padding: 16,
@@ -485,11 +505,15 @@ const styles = StyleSheet.create({
     width: '50%',
     backgroundColor: '#EDEDED',
   },
+  
   activeTab: {
     // borderBottomWidth: 2,
     // borderBottomColor: 'white',
     backgroundColor: 'white',
     borderRadius: 15,
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   tabText: {
     fontSize: RFValue(12),

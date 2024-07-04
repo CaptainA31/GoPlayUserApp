@@ -27,8 +27,8 @@ import {
 } from '../../services/HostActivity';
 import Invites from './components/Invites';
 import Loader from '../../components/Loader';
-// import {useDispatch} from 'react-redux';
-// import {fetchMyGames} from '../../redux/myGamesSlice';
+import {useDispatch} from 'react-redux';
+import {fetchMyGames} from '../../redux/myGamesSlice';
 import AlertBox from '../../components/AlertBox';
 import AlertBox2 from '../../components/AlertBox2';
 

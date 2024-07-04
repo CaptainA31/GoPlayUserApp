@@ -1,3 +1,4 @@
+import { Platform, StatusBar } from "react-native";
 
 export const colors = {
   // light: '#38B000',
@@ -16,7 +17,8 @@ export const screen = {
     height : "100%",
     backgroundColor : "white",
     overflow : "hidden",
-    resizeMode: "contain"
+    resizeMode: "contain",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
 }
 
 export const imageStyle = {

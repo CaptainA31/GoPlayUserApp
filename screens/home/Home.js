@@ -13,7 +13,7 @@ import {
   Pressable,
   SafeAreaView,
   Platform,
-  StatusBar
+  // StatusBar
 } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { colors, imageStyle, screen } from '../../GlobalStyles';
@@ -33,23 +33,23 @@ import MyTabBar from '../../components/MyTabBar';
 import BookingGames from '../../components/BooingGames';
 import Games from '../../components/Games';
 import lion from '../../assets/lion-bg.png';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getUserDetail } from '../../services/userService';
-// import { fetchUser, setUserDetail } from '../../redux/userSlice';
-// import { fetchFacility } from '../../redux/facilitySlice';
-// import { getHostActivity } from '../../services/HostActivity';
-// import { fetchMyGames } from '../../redux/myGamesSlice';
-// import { fetchPlayNow } from '../../redux/playNowSlice';
-// import { useFocusEffect } from '@react-navigation/core';
-// import { fetchMyInvites } from '../../redux/invitedSlice';
-// import { getAllOffers, getBanners } from '../../services/Offers';
-// import OfferComponent from '../../components/Offers';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserDetail } from '../../services/userService';
+import { fetchUser, setUserDetail } from '../../redux/userSlice';
+import { fetchFacility } from '../../redux/facilitySlice';
+import { getHostActivity } from '../../services/HostActivity';
+import { fetchMyGames } from '../../redux/myGamesSlice';
+import { fetchPlayNow } from '../../redux/playNowSlice';
+import { useFocusEffect } from '@react-navigation/core';
+import { fetchMyInvites } from '../../redux/invitedSlice';
+import { getAllOffers, getBanners } from '../../services/Offers';
+import OfferComponent from '../../components/Offers';
 import Swiper from 'react-native-swiper';
 // import {
 //   NotificationListener,
 //   requestUserPermission,
 // } from '../../services/notificationService';
-import { LinearGradient } from 'expo-linear-gradient';
+// import  from 'expo-linear-gradient';
 
 const Home = ({ drawerAnimationStyle, navigation }) => {
   const [userDetail, setUserDetail] = useState({
@@ -108,10 +108,7 @@ const Home = ({ drawerAnimationStyle, navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={[screen,
-        {
-          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-        }]
+    <SafeAreaView style={[screen]
     } // {...drawerAnimationStyle}
     >
       <View style={{ height: '22%' }}>
@@ -279,9 +276,9 @@ const Home = ({ drawerAnimationStyle, navigation }) => {
                 resizeMode: 'contain',
                 width: '100%',
                 height: '100%',
-                marginLeft: -55,
-                borderBottomLeftRadius: RFValue(8),
-                borderTopLeftRadius: RFValue(8),
+                marginLeft: -62,
+                borderBottomLeftRadius: RFValue(150),
+                borderTopLeftRadius: RFValue(150),
               }}
               style={{
                 backgroundColor: '#00F5A0',

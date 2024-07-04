@@ -148,10 +148,7 @@ const Book = ({ navigation, drawerAnimationStyle }) => {
   };
 
   return (
-    <SafeAreaView style={[screen,
-        {
-          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-        }]
+    <SafeAreaView style={[screen]
       } // {...drawerAnimationStyle}
     >
       <Animated.View
