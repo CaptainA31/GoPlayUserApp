@@ -84,7 +84,7 @@ export default function App() {
   return (
     <Provider>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="DrawerNavigator" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="signin" component={SignIn} />
         <Stack.Screen name="signup" component={SignUp} />
