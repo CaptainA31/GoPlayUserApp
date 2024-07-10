@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
   },
   p: {
     fontSize: RFValue(15),
-    color: 'black',
+    color: 'grey',
     fontFamily: 'Poppins-Regular',
   },
   tabContainer: {
@@ -474,7 +474,7 @@ const styles = StyleSheet.create({
   },
   h3: {
     fontSize: RFValue(15),
-    color: 'black',
+    color: 'grey',
     paddingBottom: '6%',
     fontFamily: 'Poppins-Regular',
   },

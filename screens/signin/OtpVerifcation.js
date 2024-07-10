@@ -1,174 +1,89 @@
-import React, { useEffect, useState, useRef } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Platform,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { RFValue } from 'react-native-responsive-fontsize';
-import ScreenLayout from '../../components/ScreenLayout';
-import { colors } from '../../GlobalStyles';
-import lock from '../../assets/password.png';
-import nextIcon from '../../assets/nextIcon.png';
-import backIcon from '../../assets/arrow.png';
-import { TextInput } from 'react-native-paper';
-// import auth from '@react-native-firebase/auth';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import AlertBox from '../../components/AlertBox';
-import Loader from '../../components/Loader';
+import React, { useState, useRef } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { colors } from '../../GlobalStyles';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import backIcon from '../../assets/arrow.png';
 
-const OtpVerification = ({ navigation, route }) => {
-  // const { phone } = route.params;
-  const { phone } = "+923052976751"
+const OtpVerification = ({ navigation }) => {
   const [otp, setOtp] = useState(new Array(6).fill(''));
-  const [confirm, setConfirm] = useState();
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-  const [alertBox, setAlertBox] = useState(false);
-  const [title, setTitle] = useState('');
-  const otpInputs = useRef([]);
+  const inputRefs = useRef([]);
 
-  // useEffect(() => {
-    // setLoading(true);
-    // Uncomment and implement your Firebase phone authentication logic here
-    // const confirmation = auth()
-    //   .signInWithPhoneNumber(phone)
-    //   .then(c => {
-    //     setLoading(false);
-    //     setConfirm(c);
-    //   })
-    //   .catch(err => {
-    //     setLoading(false);
-    //     setTitle('Error');
-    //     setAlertBox(true);
-    //     setMessage(
-    //       'You have provided an incorrect phone number. Please provide a valid phone number',
-    //     );
-    //     setTimeout(() => {
-    //       navigation.navigate('getPhone');
-    //     }, 3000);
-    //   });
-  // }, []);
-
-  const handleOtpChange = (text, index) => {
+  const handleChange = (value, index) => {
     const newOtp = [...otp];
-    newOtp[index] = text;
+    newOtp[index] = value;
     setOtp(newOtp);
 
-    if (text && index < 5) {
-      otpInputs.current[index + 1].focus();
+    // Move to the next input if value is not empty and not the last input
+    if (value && index < otp.length - 1) {
+      inputRefs.current[index + 1].focus();
     }
   };
 
-  const handleNext = () => {
-    // const otpString = otp.join('');
-    // setLoading(true);
-    // confirm
-    //   ?.confirm(otpString)
-    //   .then(response => {
-    //     setLoading(false);
-    //     navigation.navigate('getEmail', { phone });
-    //   })
-    //   .catch(err => {
-    //     setLoading(false);
-    //     setTitle('Error');
-    //     setAlertBox(true);
-    //     setMessage('Please provide a valid OTP number');
-    //   });
-    navigation.navigate("home");
+  const handleKeyPress = (e, index) => {
+    if (e.nativeEvent.key === 'Backspace' && index > 0 && !otp[index]) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
+
+  const handleVerify = () => {
+    // Handle OTP verification logic here
+  };
+
+  const handleResendOtp = () => {
+    // Handle resend OTP logic here
   };
 
   return (
-    <View style={{ height: '100%' }}>
-      <LinearGradient style={{ height: '100%' }} colors={[colors.light, colors.dark]}>
-        <AlertBox
-          alertBox={alertBox}
-          setAlertBox={setAlertBox}
-          title={title}
-          message={message}
-        />
-        <Loader value={loading} />
-        <SafeAreaView style={styles.headerContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('getPhone')}
-            style={styles.backButton}>
-            <Image source={backIcon} style={styles.backlogo} />
-          </TouchableOpacity>
-        </SafeAreaView>
-        <View
-          style={{
-            height: '50%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <View style={styles.circle}>
-            <Image
-              source={lock}
-              style={{
-                width: '50%',
-                height: '50%',
-                resizeMode: 'contain',
-                tintColor: 'grey',
-              }}
-            />
-          </View>
-          <Text style={{ fontSize: RFValue(18), color: 'grey' }}>
-            Verify your mobile number{' '}
-          </Text>
-          <View style={{ paddingHorizontal: '5%', marginTop: '2%' }}>
-            <Text
-              style={{
-                fontSize: RFValue(14),
-                color: 'grey',
-                textAlign: 'center',
-              }}>
-              We have sent you SMS with a 6-digit verification code (OTP) on{' '}
-              {phone}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.otpContainer}>
-          {otp.map((digit, index) => (
-            <TextInput
-              key={index}
-              value={digit}
-              onChangeText={(text) => handleOtpChange(text, index)}
-              keyboardType="numeric"
-              maxLength={1}
-              style={styles.otpInput}
-              ref={(input) => (otpInputs.current[index] = input)}
-            />
-          ))}
-        </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+      <TouchableOpacity
+          onPress={() => navigation.navigate('signin')}
+          style={styles.backButton}>
+          <Image source={backIcon} style={styles.backlogo} />
+        </TouchableOpacity>
+        <Text style={styles.h2}>OTP Verification</Text>
+      </View>
+      <View style={styles.logoContainer}>
+        <Text style={styles.h1}>Enter OTP</Text>
+        <Text style={styles.p}>6 digit code has been sent to </Text>
+        <Text style={styles.p}>+923341891347</Text>
+      </View>
 
-        <View
-          style={{
-            height: '20%',
-            alignItems: 'flex-end',
-            paddingHorizontal: '5%',
-          }}>
-          <TouchableOpacity
-            disabled={loading}
-            style={{ top: '35%' }}
-            onPress={handleNext}>
-            <View style={styles.button}>
-              <Image
-                style={{
-                  width: '40%',
-                  height: '40%',
-                  resizeMode: 'contain',
-                  tintColor: 'grey',
-                }}
-                source={nextIcon}
-              />
-            </View>
-          </TouchableOpacity>
+      <View style={styles.otpContainer}>
+        {otp.map((digit, index) => (
+          <TextInput
+            key={index}
+            style={[
+              styles.otpInput,
+              digit && { borderColor: '#38B000', color: '#38B000' }
+            ]}
+            value={digit}
+            onChangeText={(value) => handleChange(value, index)}
+            onKeyPress={(e) => handleKeyPress(e, index)}
+            keyboardType="numeric"
+            maxLength={1}
+            ref={(el) => (inputRefs.current[index] = el)}
+          />
+        ))}
+      </View>
+
+      <TouchableOpacity style={styles.verifyButton} onPress={handleVerify}>
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>Verify</Text>
         </View>
-      </LinearGradient>
-    </View>
+      </TouchableOpacity>
+
+      <Text style={styles.resendText}>
+        Didn’t receive the code?{' '}
+        <Text style={styles.resendLink} onPress={handleResendOtp}>Resend OTP</Text>
+      </Text>
+
+      <Text style={styles.termsText}>
+        By signing up, you agree to our <Text style={styles.link}>Terms of Service</Text> and acknowledge that our <Text style={styles.link}>Privacy Policy</Text> applies to you.
+      </Text>
+    </SafeAreaView>
   );
 };
 
@@ -178,48 +93,111 @@ const styles = StyleSheet.create({
     width: 18,
     height: 22,
   },
-  headerContainer: {
-    width: '90%',
-    paddingTop: '5%',
-    marginBottom: '-5%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  circle: {
-    backgroundColor: '#c3c3c354',
-    width: RFValue(100),
-    height: RFValue(100),
-    borderRadius: 200,
+  backButton: {
+    right: '50%',
+    paddingHorizontal: '4%',
+    paddingTop: '2%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '2%',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: 'white',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding: 10,
+  },
+  logoContainer: {
+    marginTop: 60,
+    marginBottom: 30,
+    height: '15%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  h2: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: RFValue(20),
+    color: 'black',
+    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
+  },
+  h1: {
+    textAlign: 'center',
+    fontSize: RFValue(30),
+    color: 'black',
+    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
+  },
+  p: {
+    fontSize: RFValue(15),
+    color: 'grey',
+    fontFamily: 'Poppins-Regular',
+    textAlign: 'center',
+    marginTop: 5,
   },
   otpContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: '5%',
+    padding: 20,
+    marginBottom: 30,
   },
   otpInput: {
-    backgroundColor: 'white',
-    borderColor: 'grey',
-    borderWidth: 2,
-    borderRadius: 4,
+    width: 40,
+    height: 40,
     textAlign: 'center',
-    fontSize: RFValue(18),
-    width: RFValue(40),
-    height: RFValue(50),
-    marginRight: Platform.OS === 'ios' ? RFValue(10) : RFValue(15),
+    fontSize: 18,
+    borderRadius: 12,
+    backgroundColor: '#F4F4F4',
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    shadowOffset: { width: -4, height: -4 },
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    borderWidth: 1,
+    borderColor: '#F4F4F4',
   },
   button: {
-    width: RFValue(50),
-    height: RFValue(50),
-    borderColor: 'grey',
-    borderWidth: 3,
-    borderRadius: 100,
-    alignItems: 'center',
+    backgroundColor: '#38B000',
+    height: 50,
+    width: '80%',
     justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontFamily: 'Poppins-Bold',
+  },
+  resendText: {
+    fontSize: RFValue(14),
+    color: 'grey',
+    textAlign: 'center',
+    marginTop: 50,
+    marginBottom: 20,
+    fontFamily: 'Poppins-Regular',
+  },
+  resendLink: {
+    color: '#4DAAE9',
+    fontWeight: 'bold',
+  },
+  termsText: {
+    fontSize: RFValue(12),
+    color: 'grey',
+    textAlign: 'center',
+    marginBottom: 20,
+    marginTop: 160,
+    fontFamily: 'Poppins-Regular',
+  },
+  link: {
+    color: '#4DAAE9',
+    textDecorationLine: 'underline',
   },
 });
 
 export default OtpVerification;
+  
