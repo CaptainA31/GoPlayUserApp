@@ -11,14 +11,18 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {colors} from '../../../GlobalStyles';
 import {webURL} from '../../../services/BaseURL';
 import {getAllSports} from '../../../services/signin';
-import {useDispatch, useSelector} from 'react-redux';
+// import {useDispatch, useSelector} from 'react-redux';
 import Invites from './Invites';
 
 const SelectSports = ({selectedSport, setSelectedSport}) => {
   const [sports, setSports] = useState([{name: '', logo: ''}]);
-  const reduxSports = useSelector(
-    state => state?.userDetail.userDetail.sportsInterest,
-  );
+  
+  // Dummy reduxSports data
+  const reduxSports = [
+    {name: 'Football', logo: '/images/football.png'},
+    {name: 'Basketball', logo: '/images/basketball.png'},
+    // Add more dummy sports data as needed
+  ];
 
   useEffect(() => {
     getAllSports().then(res => {
@@ -31,42 +35,33 @@ const SelectSports = ({selectedSport, setSelectedSport}) => {
   };
 
   const checkMultiple = item => {
-    if (selectedSport == item) {
-      return true;
-    } else {
-      return false;
-    }
+    return selectedSport === item;
   };
 
   return (
     <View
       style={{
-        height: '100%',
+        flex: 1,
         paddingTop: '5%',
         alignSelf: 'center',
         width: '80%',
-        
-        
       }}>
       <FlatList
         data={sports}
         numColumns={2}
         keyExtractor={item => item.name}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{}}
-        renderItem={({item, index}) => (
-          //  <Text>{item.name}</Text>
-          <View style={{height: RFValue(120), width: '50%', }}>
+        renderItem={({item}) => (
+          <View style={{height: RFValue(120), width: '50%'}}>
             <TouchableOpacity
               onPress={() => handleSelection(item)}
-              style={[styles.cardLogo]}>
+              style={styles.cardLogo}>
               <View
                 style={[
                   styles.ballCircle,
                   {
                     borderColor: checkMultiple(item) ? 'white' : colors.grey,
                     backgroundColor: checkMultiple(item) ? '#38B000' : null,
-                    
                   },
                 ]}>
                 <Image
@@ -81,7 +76,6 @@ const SelectSports = ({selectedSport, setSelectedSport}) => {
                 <Text
                   style={{
                     color: checkMultiple(item) ? colors.white : colors.grey,
-                    // fontFamily: "Poppins-Regular"
                   }}>
                   {item.name}
                 </Text>
@@ -111,6 +105,5 @@ const styles = StyleSheet.create({
   cardLogo: {
     alignItems: 'center',
     justifyContent: 'space-around',
-    
   },
 });

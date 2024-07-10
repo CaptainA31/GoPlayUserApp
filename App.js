@@ -22,6 +22,7 @@ import { CardStyleInterpolators } from '@react-navigation/stack';
 import { enableScreens } from 'react-native-screens';
 import { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { Provider } from 'react-native-paper';
+import store from "./redux/store";
 
 enableScreens(false);
 
@@ -82,7 +83,7 @@ const DrawerNavigator = () => {
 
 export default function App() {
   return (
-    <Provider>
+    <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Splash" component={SplashScreen} />
