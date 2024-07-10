@@ -4,7 +4,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Touchable,
   Image,
 } from 'react-native';
 import {OutlinedTextField} from 'rn-material-ui-textfield';
@@ -16,7 +15,7 @@ import RadioForm, {
   RadioButtonLabel,
 } from 'react-native-simple-radio-button';
 import {RFValue} from 'react-native-responsive-fontsize';
-import LinearGradient from 'expo-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import info from '../../../assets/info.png';
 import SkillsDropdown from '../components/SkillsDropDown'; // Import the SkillsDropdown component
 
@@ -53,18 +52,11 @@ const Player = ({
   const handleEventType = item => {};
 
   const checkMultiple = item => {
-    if (skills == item) {
-      return false;
-    } else {
-      return true;
-    }
+    return skills === item;
   };
+  
   const checkGender = item => {
-    if (gender == item) {
-      return false;
-    } else {
-      return true;
-    }
+    return gender === item;
   };
 
   const handleInvite = value => {
@@ -76,27 +68,26 @@ const Player = ({
     <View>
       <Text style={{fontWeight: 'bold'}}>Skills</Text>
       <View style={styles.skillsContainer}>
-        {skillsType.map(item => {
-          return (
-            <TouchableOpacity
-              onPress={() => handleSkills(item)}
-              style={{width: '32%'}}>
-              <LinearGradient
-                colors={
-                  checkMultiple(item)
-                    ? ['white', 'white']
-                    : [colors.light, colors.dark]
-                }
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                style={checkMultiple(item) ? styles.button : styles.selected}>
-                <Text style={{color: checkMultiple(item) ? 'black' : 'white'}}>
-                  {item}
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          );
-        })}
+        {skillsType.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => handleSkills(item)}
+            style={{width: '32%'}}>
+            <LinearGradient
+              colors={
+                checkMultiple(item)
+                  ? ['white', 'white']
+                  : [colors.light, colors.dark]
+              }
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              style={checkMultiple(item) ? styles.button : styles.selected}>
+              <Text style={{color: checkMultiple(item) ? 'black' : 'white'}}>
+                {item}
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        ))}
       </View>
 
       <View style={{marginTop: '4%'}}>
@@ -144,37 +135,34 @@ const Player = ({
       <View style={{marginTop: '3%'}}>
         <Text style={{fontWeight: 'bold'}}>Gender</Text>
         <View style={styles.skillsContainer}>
-          {genderType.map(item => {
-            return (
-              <TouchableOpacity
-                onPress={() => handleGender(item)}
-                style={{width: '32%'}}>
-                <LinearGradient
-                  colors={
-                    checkGender(item)
-                      ? ['white', 'white']
-                      : [colors.light, colors.dark]
-                  }
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 0}}
-                  style={checkGender(item) ? styles.button : styles.selected}>
-                  <Text style={{color: checkGender(item) ? 'black' : 'white'}}>
-                    {item}
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            );
-          })}
+          {genderType.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleGender(item)}
+              style={{width: '32%'}}>
+              <LinearGradient
+                colors={
+                  checkGender(item)
+                    ? ['white', 'white']
+                    : [colors.light, colors.dark]
+                }
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                style={checkGender(item) ? styles.button : styles.selected}>
+                <Text style={{color: checkGender(item) ? 'black' : 'white'}}>
+                  {item}
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          ))}
         </View>
       </View>
       <View style={{marginTop: '3%'}}>
         <Text style={{fontWeight: 'bold'}}>Event Type</Text>
         <View style={{marginTop: '2%'}}>
           <RadioForm formHorizontal={true} animation={true}>
-            {/* To create radio buttons, loop through your array of options */}
             {radio_props.map((obj, i) => (
               <RadioButton labelHorizontal={true} key={i}>
-                {/*  You can set RadioButtonLabel before RadioButtonInput */}
                 <RadioButtonInput
                   obj={obj}
                   index={i}
