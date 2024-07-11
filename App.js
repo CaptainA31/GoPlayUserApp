@@ -23,6 +23,14 @@ import { enableScreens } from 'react-native-screens';
 import { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { Provider } from 'react-native-paper';
 import store from "./redux/store";
+import Groups from './screens/groups/Groups';
+import CreateGroup from './screens/groups/CreateGroup';
+import Offers from './screens/offers/Offers';
+import Community from './screens/community/Community';
+import LeaderBoard from './screens/leaderboard/LeaderBoard';
+import Messages from './screens/messages/Messages';
+import Train from './screens/train/Train';
+import TransferMoney from './screens/wallet/TransferMoney';
 
 enableScreens(false);
 
@@ -76,6 +84,9 @@ const DrawerNavigator = () => {
         <Drawer.Screen name="WALLET">
           {props => <Wallet {...props} drawerAnimationStyle={animatedStyle} />}
         </Drawer.Screen>
+        <Drawer.Screen name="MESSAGES">
+          {props => <Messages {...props} drawerAnimationStyle={animatedStyle} />}
+        </Drawer.Screen>
       </Drawer.Navigator>
     </LinearGradient>
   );
@@ -85,7 +96,7 @@ export default function App() {
   return (
     <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="DrawerNavigator" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="signin" component={SignIn} />
         <Stack.Screen name="signup" component={SignUp} />
@@ -93,7 +104,14 @@ export default function App() {
         <Stack.Screen name="getEmail" component={GetEmail} />
         <Stack.Screen name="otp" component={OtpVerification} />
         <Stack.Screen name="hostActivity" component={HostActivity} />
+        <Stack.Screen name="groups" component={Groups} />
+        <Stack.Screen name="offers" component={Offers} />
+        <Stack.Screen name="createGroup" component={CreateGroup} />
+        <Stack.Screen name="community" component={Community} />
         <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />
+        <Stack.Screen name="leaderBoard" component={LeaderBoard} />
+        <Stack.Screen name="train" component={Train} />
+        <Stack.Screen name="transferMoney" component={TransferMoney} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

@@ -11,11 +11,12 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {colors} from '../../../GlobalStyles';
 import {webURL} from '../../../services/BaseURL';
 import {getAllSports} from '../../../services/signin';
+import footballImg from '../../../assets/football.jpg';
 // import {useDispatch, useSelector} from 'react-redux';
 import Invites from './Invites';
 
 const SelectSports = ({selectedSport, setSelectedSport}) => {
-  const [sports, setSports] = useState([{name: '', logo: ''}]);
+  const [sports, setSports] = useState([{name: 'Hello', logo: footballImg}]);
   
   // Dummy reduxSports data
   const reduxSports = [
