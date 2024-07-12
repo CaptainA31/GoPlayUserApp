@@ -14,13 +14,14 @@ const AlertBox = ({ alertBox, setAlertBox, cancel, success, message, title, onSu
       animationType="slide"
       transparent={true}
       visible={alertBox}
+      
       onRequestClose={() => {
 
         setAlertBox(false);
       }}
     >
       <View style={{ height: "100%", justifyContent: "center" }}>
-        <View style={{ width: "75%", borderRadius: 15, overflow: "hidden", alignSelf: "center", backgroundColor: "white" }}>
+        <View style={{ width: "75%", borderRadius: 15, overflow: "hidden", alignSelf: "center", backgroundColor: "white", borderColor: "black", borderWidth: 0.8 }}>
           <View style={{ paddingVertical: "5%", paddingHorizontal: "2%" }}>
             <Text style={{ fontSize: RFValue(17), alignSelf: "center", fontWeight: "bold", textAlign: "center" }}>{title}</Text>
             <Text style={{ fontSize: RFValue(14), alignSelf: "center", textAlign: "center" }}>{message} </Text>
@@ -35,7 +36,7 @@ const AlertBox = ({ alertBox, setAlertBox, cancel, success, message, title, onSu
                   <Text style={{ color: '#40baff', fontSize: RFValue(14), fontWeight: "bold" }}>Ok</Text>
                 </View>
               </View> :
-              <View style={{ flexDirection: "row", borderTopWidth: 0.8, borderColor: colors.shade, justifyContent: "space-between", paddingVertical: "4%" }}>
+              <View style={{ flexDirection: "row", borderTopWidth: 0.8, borderColor: "black", justifyContent: "space-between", paddingVertical: "4%" }}>
                 <TouchableOpacity
                   onPress={() => setAlertBox(false)}
                   style={{ width: "100%", alignItems: "center" }}>

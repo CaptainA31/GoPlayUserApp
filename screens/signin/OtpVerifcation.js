@@ -38,7 +38,7 @@ const OtpVerification = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-      <TouchableOpacity
+        <TouchableOpacity
           onPress={() => navigation.navigate('signin')}
           style={styles.backButton}>
           <Image source={backIcon} style={styles.backlogo} />

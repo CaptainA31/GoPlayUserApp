@@ -33,12 +33,11 @@ const PlacePicker = ({modalVisible , setModalVisible  , setLocation}) => {
           animationInTiming = {300}
           animationOutTiming ={300}
           onSwipeComplete = {()=> setModalVisible(false)}
-        style ={{margin : 0 }}
+        style ={{margin : 0, height : "100%" }}
          onBackButtonPress={() => {
        
            setModalVisible(false);
-         }}
-          style = {{height : "100%" }}>
+         }}>
             <View style={{ height : RFValue(380) , paddingVertical : "2%", backgroundColor : "white",
             borderColor : "lightgrey" , borderWidth : 1 , paddingHorizontal : "3%" , borderRadius : 10,
             shadowColor: "#000",

@@ -85,15 +85,15 @@ export default function App() {
   return (
     <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Splash" component={SplashScreen} />
+      <Stack.Navigator initialRouteName="DrawerNavigator" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />
+        <Stack.Screen name="otp" component={OtpVerification} />
         <Stack.Screen name="signin" component={SignIn} />
+        <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="signup" component={SignUp} />
         <Stack.Screen name="getPhone" component={GetPhone} />
         <Stack.Screen name="getEmail" component={GetEmail} />
-        <Stack.Screen name="otp" component={OtpVerification} />
         <Stack.Screen name="hostActivity" component={HostActivity} />
-        <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

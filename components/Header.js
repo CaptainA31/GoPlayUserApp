@@ -60,8 +60,9 @@ const styles = StyleSheet.create({
   },
   backlogo: {
     resizeMode: 'center',
-    width: RFValue(24),
-    height: RFValue(24),
+    width: RFValue(15),
+    height: RFValue(15),
+    marginBottom: 10
   },
   text: {
     marginLeft: '5%',

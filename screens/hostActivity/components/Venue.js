@@ -9,6 +9,8 @@ import {
   FlatList,
 } from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
+
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {
   capitalizeFirstLetter,
   colors,
@@ -57,13 +59,14 @@ const Venue = ({
           fontSize: RFValue(14),
           fontFamily: 'Poppins-Bold',
           marginBottom: '1%',
+          fontWeight: "bold"
         }}>
-        Activity
+        Activity Name
       </Text>
 
       <View
         style={{
-          borderRadius: RFValue(5),
+          borderRadius: RFValue(8),
           height: RFValue(45),
           borderColor: '#D8DADC',
           borderWidth: 1,
@@ -73,12 +76,14 @@ const Venue = ({
           maxLength={100}
           value={activityName}
           multiline
+          placeholder='ABC'
           style={{
             width: '100%',
             color: '#181818',
             height: '100%',
             textAlignVertical: 'top',
             fontFamily: 'Poppins-Regular',
+            padding: 12
           }}
         />
       </View>
@@ -105,6 +110,7 @@ const Venue = ({
           fontSize: RFValue(14),
           fontFamily: 'Poppins-Bold',
           marginBottom: '1%',
+          fontWeight: "bold"
         }}>
         Location
       </Text>
@@ -118,7 +124,7 @@ const Venue = ({
         {location ? (
           <Text
             style={{
-              color: colors.light,
+              color: "#38B000",
               fontSize: RFValue(14),
               paddingHorizontal: '10%',
             }}>
@@ -153,6 +159,7 @@ const Venue = ({
             fontSize: RFValue(14),
             fontFamily: 'Poppins-Bold',
             marginBottom: '-4%',
+          fontWeight: "bold"
           }}>
           Additional Info
         </Text>
@@ -170,15 +177,58 @@ const Venue = ({
             height: '100%',
             textAlignVertical: 'top',
             fontFamily: 'Poppins-Regular',
+            padding: 12
           }}
         />
       </View>
       <Text style={{color: 'grey', fontFamily: 'Poppins-Regular'}}>
-        Info should not be greater than 100 characters
+        Maximum limit 100 word
       </Text>
 
+      <Text
+        style={{
+          fontSize: RFValue(14),
+          fontFamily: 'Poppins-Bold',
+          marginBottom: '1%',
+          fontWeight: "bold",
+          marginTop: 15
+        }}>
+        Pitch Court
+      </Text>
+
+      <View
+        style={{
+          borderRadius: RFValue(8),
+          height: RFValue(45),
+          borderColor: '#D8DADC',
+          borderWidth: 1,
+        }}>
+        <TextInput
+          onChangeText={event => setActivityName(event)}
+          maxLength={100}
+          value={activityName}
+          multiline
+          placeholder='Dummy'
+          style={{
+            width: '100%',
+            color: '#181818',
+            height: '100%',
+            textAlignVertical: 'top',
+            fontFamily: 'Poppins-Regular',
+            padding: 12
+          }}
+        />
+      </View>
+      <View style={{flexDirection: 'row', marginTop: 5}}>
+            <FontAwesome name="question-circle" size={24} color="#38B000" />
+          <Text style={{color: 'grey', fontFamily: 'Poppins-Regular', marginLeft: 10}}>
+          please add details for the pitch?court to assist the players identify the pitch/court at venue. Example for football : 7X7 Pitch 1
+          </Text>
+      </View>
+
       <View style={{marginVertical: '3%'}}>
-        <Text style={{fontSize: RFValue(14), fontFamily: 'Poppins-Bold'}}>
+        <Text style={{fontSize: RFValue(14), fontFamily: 'Poppins-Bold',
+          fontWeight: "bold"}}>
           Venue Facilities
         </Text>
       </View>
@@ -228,7 +278,7 @@ const styles = StyleSheet.create({
   dotButton: {
     borderColor: colors.light,
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 8,
     borderStyle: 'dotted',
     height: RFValue(45),
     flexDirection: 'row',
