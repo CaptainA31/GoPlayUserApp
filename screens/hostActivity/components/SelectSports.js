@@ -1,16 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { colors } from '../../../GlobalStyles';
-import { webURL } from '../../../services/BaseURL';
-import { getAllSports } from '../../../services/signin';
-// import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {colors} from '../../../GlobalStyles';
+import {webURL} from '../../../services/BaseURL';
+import {getAllSports} from '../../../services/signin';
+import footballImg from '../../../assets/football.jpg';
+// import {useDispatch, useSelector} from 'react-redux';
 import Invites from './Invites';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const SelectSports = ({ selectedSport, setSelectedSport }) => {
   const [sports, setSports] = useState([{ name: '', logo: '' }]);
 
+const SelectSports = ({selectedSport, setSelectedSport}) => {
+  const [sports, setSports] = useState([{name: 'Hello', logo: footballImg}]);
+  
   // Dummy reduxSports data
   const reduxSports = [
     { name: 'Football', logo: '/images/football.png' },

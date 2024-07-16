@@ -276,7 +276,7 @@ const Home = ({ drawerAnimationStyle, navigation }) => {
                 resizeMode: 'contain',
                 width: '100%',
                 height: '100%',
-                marginLeft: -62,
+                marginLeft: -65,
                 borderBottomLeftRadius: RFValue(150),
                 borderTopLeftRadius: RFValue(150),
               }}
