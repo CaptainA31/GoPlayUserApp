@@ -19,9 +19,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 const SelectSports = ({ selectedSport, setSelectedSport }) => {
   const [sports, setSports] = useState([{ name: '', logo: '' }]);
 
-const SelectSports = ({selectedSport, setSelectedSport}) => {
-  const [sports, setSports] = useState([{name: 'Hello', logo: footballImg}]);
-  
   // Dummy reduxSports data
   const reduxSports = [
     { name: 'Football', logo: '/images/football.png' },
