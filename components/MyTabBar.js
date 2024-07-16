@@ -33,7 +33,7 @@ const MyTabBar = ({navigation , currentTab})=> {
                           <Image
                             style={{
                               width: RFValue(18),
-                              tintColor: '#38B000',
+                              tintColor: colors.light,
                               height: RFValue(18),
                             }}
                             source={item.icon}
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     bar : {
         width : "120%",
         height : RFValue(2.5),
-        backgroundColor : "#38B000",
+        backgroundColor : colors.light,
         borderRadius : 20,
         // top : "15%"
     }

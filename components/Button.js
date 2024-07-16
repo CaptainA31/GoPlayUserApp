@@ -6,13 +6,16 @@ import {colors} from '../GlobalStyles';
 
 const Button = ({text}) => {
   return (
-    <LinearGradient
-      colors={[colors.light, colors.dark]}
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 0}}
-      style={styles.button}>
+    // <LinearGradient
+    //   colors={[colors.light, colors.dark]}
+    //   start={{x: 0, y: 0}}
+    //   end={{x: 1, y: 0}}
+    //   style={styles.button}>
+    //   <Text style={styles.text}>{text}</Text>
+    // </LinearGradient>
+    <View style={styles.button}>
       <Text style={styles.text}>{text}</Text>
-    </LinearGradient>
+    </View>
   );
 };
 
@@ -22,7 +25,8 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 20,
+    
   },
   text: {
     fontSize: RFValue(16),

@@ -1,15 +1,14 @@
 import moment from 'moment';
-import React, {useRef, useState} from 'react';
-import {StyleSheet, Text, View, Image, Pressable, Alert} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {OutlinedTextField} from 'rn-material-ui-textfield';
-import {colors} from '../../../GlobalStyles';
-import DateView from './DateView';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, Text, View, Image, Pressable, Alert, Switch } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {OutlinedTextField} from 'rn-material-ui-textfield';
 import time from '../../../assets/clock.png';
 import info from '../../../assets/info.png';
 import calendar from '../../../assets/calendar.png';
 import AlertBox from '../../../components/AlertBox';
+import { colors } from '../../../GlobalStyles';
 
 const Time = ({
   setStartTime,
@@ -33,20 +32,10 @@ const Time = ({
   const [alertBox2, setAlertBox2] = useState(false);
   const [title, setTitle] = useState('');
   const [back, setBack] = useState();
+  const [isReminderSet, setIsReminderSet] = useState(false);
 
   const onDateSelected = date => {
     setSelectedDate(date);
-    //     let data = {
-    //         date : moment(date).format('MM-DD-YYYY')
-    //     }
-    //    getSlotsByDate(data).then((res) =>{
-    //        if (res.data.status === true) {
-    //            setScheduleList(res.data.slots)
-    //        }else {
-    //            setScheduleList([])
-    //        }
-
-    //    } )
   };
 
   const onDismissStart = React.useCallback(() => {
@@ -97,7 +86,7 @@ const Time = ({
             {
               text: 'Back',
               style: 'destructive',
-              onPress: () => {},
+              onPress: () => { },
             },
           ],
         );
@@ -131,8 +120,17 @@ const Time = ({
     }
   };
 
+  const formatTimeWithAMPM = (time) => {
+    const [timePart, ampm] = time.split(' ');
+    return (
+      <Text style={styles.timeText}>
+        {timePart} <Text style={styles.ampmText}>     | {ampm}</Text>
+      </Text>
+    );
+  };
+
   return (
-    <View style={{paddingHorizontal: '3%'}}>
+    <View style={{ paddingHorizontal: '1%', backgroundColor: '#fff', flex: 1 }}>
       <DateTimePickerModal
         isVisible={startTimeVisible}
         onCancel={onDismissStart}
@@ -158,132 +156,76 @@ const Time = ({
         message={message}
       />
 
-      <View style={{marginTop: '-4%'}}>
-        <Pressable
-          onPress={() => setCalendarVisible(true)}
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '25%',
-            top: '5%',
-            zIndex: 1000,
-          }}></Pressable>
+      <Text style={styles.headerText}>Activity will set at</Text>
 
+      <View style={styles.timePickerContainer}>
         <Pressable
-          onPress={() => setCalendarVisible(true)}
-          style={{
-            alignSelf: 'flex-end',
-            zIndex: 100,
-            width: 22,
-            height: 22,
-            top: '16%',
-          }}>
-          <Image
-            source={calendar}
-            style={{width: '100%', height: '100%', resizeMode: 'contain'}}
-          />
+          onPress={() => setStartTimeVisible(true)}
+          style={styles.timePicker}
+        >
+          <Text style={styles.timePickerLabel}>Start Time</Text>
+          <View style={styles.timePickerContent}>
+            {formatTimeWithAMPM(startTime)}
+            {/* <Image source={time} style={styles.icon} /> */}
+          </View>
         </Pressable>
-        <DateView
-          onDateSelected={onDateSelected}
-          setSelectedMonth={setSelectedMonth}
-          dateRef={dateRef}
-          handleDateChange={handleDateChange}
-          selectedMonth={selectedMonth}
+
+        <Pressable
+          onPress={() => setEndTimeVisible(true)}
+          style={styles.timePicker}
+        >
+          <Text style={styles.timePickerLabel}>End Time</Text>
+          <View style={styles.timePickerContent}>
+            {formatTimeWithAMPM(endTime)}
+            {/* <Image source={time} style={styles.icon} /> */}
+          </View>
+        </Pressable>
+      </View>
+
+      <View style={styles.datePickerContainer}>
+        <Pressable
+          onPress={() => setCalendarVisible(true)}
+          style={styles.datePicker}
+        >
+          <Text style={styles.datePickerLabel}>Date</Text>
+          <View style={styles.datePickerContent}>
+            <Text style={styles.timeText}>{selectedMonth.format('MM/DD/YYYY')}</Text>
+            <Image source={calendar} style={styles.icon} />
+          </View>
+        </Pressable>
+      </View>
+
+      <View style={styles.reminderContainer}>
+        <Switch
+          value={isReminderSet}
+          onValueChange={setIsReminderSet}
+          thumbColor={isReminderSet ? colors.dark : colors.light}
+          trackColor={{ false: '#767577', true: colors.light }}
+          style={{ marginLeft: 5}}
         />
+        <Text style={styles.reminderText}>Set Reminder</Text>
+        <Text style={styles.reminderSubText}>Reminder will be set on your Google calendar</Text>
       </View>
 
-      <View style={{marginTop: '5%'}}>
-        <Text style={{fontSize: RFValue(14), fontWeight: 'bold'}}>
-          Activity will set at
-        </Text>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: '5%',
-          }}>
-          <Pressable
-            onPress={() => setStartTimeVisible(true)}
-            style={{width: '49%'}}>
-            <View style={styles.outlineField}>
-              <View style={styles.outlineText}>
-                <Text>Start Time</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  height: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingHorizontal: '5%',
-                }}>
-                <Text>{startTime}</Text>
-                <View style={{width: RFValue(14), height: RFValue(14)}}>
-                  <Image
-                    source={time}
-                    style={{
-                      resizeMode: 'contain',
-                      width: '100%',
-                      height: '100%',
-                      tintColor: colors.light,
-                    }}
-                  />
-                </View>
-              </View>
-            </View>
-          </Pressable>
-          <Pressable
-            onPress={() => setEndTimeVisible(true)}
-            style={{width: '49%'}}>
-            <View style={styles.outlineField}>
-              <View style={styles.outlineText}>
-                <Text>End Time</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  height: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingHorizontal: '5%',
-                }}>
-                <Text>{endTime}</Text>
-                <View style={{width: RFValue(14), height: RFValue(14)}}>
-                  <Image
-                    source={time}
-                    style={{
-                      resizeMode: 'contain',
-                      width: '100%',
-                      height: '100%',
-                      tintColor: colors.light,
-                    }}
-                  />
-                </View>
-              </View>
-            </View>
-          </Pressable>
-        </View>
-      </View>
 
       <View style={{marginTop: '5%'}}>
-        {/* <Text style={{fontSize: RFValue(14)}}>Pitch/Court Details</Text> */}
+        <Text style={{fontSize: RFValue(14)}}>Pitch/Court Details</Text>
 
         <View style={{marginTop: '2%'}}>
           <OutlinedTextField
             lineWidth={1}
-            tintColor={colors.light}
+            tintColor={"#D8DADC"}
             baseColor="grey"
             textColor="grey"
             value={pitchDetail}
             containerStyle={{height: RFValue(45)}}
-            inputContainerStyle={{paddingRight: '20%', height: RFValue(50)}}
+            // inputContainerStyle={{paddingRight: '20%', height: RFValue(50)}}
             onChangeText={event => setPitchDetail(event)}
-            label="Pitch/Court Details"
+            // label="Pitch/Court Details"
           />
         </View>
       </View>
-
       <View
         style={{marginTop: '5%', flexDirection: 'row', alignItems: 'center'}}>
         <View style={{width: 25, height: 25, marginRight: '2%'}}>
@@ -298,6 +240,7 @@ const Time = ({
           the pitch/court at the venue.Example for football : 7x7 pitch 1
         </Text>
       </View>
+
     </View>
   );
 };
@@ -305,29 +248,110 @@ const Time = ({
 export default Time;
 
 const styles = StyleSheet.create({
-  pitch: {
-    borderColor: colors.light,
-    borderRadius: RFValue(5),
-    height: RFValue(30),
-    paddingHorizontal: '5%',
-    width: RFValue(60),
-    borderWidth: 1,
-    justifyContent: 'center',
-    marginTop: '2%',
+  headerText: {
+    fontSize: RFValue(14),
+    fontWeight: 'bold',
+    color: '#000',
+    marginTop: '5%',
+    marginBottom: 30
   },
-  outlineField: {
-    borderColor: colors.light,
-    height: RFValue(45),
-    borderRadius: 5,
+  timePickerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: '5%',
+    marginBottom: 30
+  },
+  timePicker: {
+    width: '48%',
+    borderColor: '#D8DADC',
     borderWidth: 2,
+    borderRadius: 5,
+    padding: '3%',
   },
-  outlineText: {
+  timePickerLabel: {
     position: 'absolute',
-    backgroundColor: 'white',
-    paddingLeft: '2%',
+    top: -30,
+    left: -6,
+    backgroundColor: '#fff',
+    paddingHorizontal: 5,
+    fontSize: RFValue(14),
+    color: 'black',
+  },
+  timePickerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: '5%',
-    top: '-20%',
+  },
+  timeText: {
+    fontSize: RFValue(16),
+    color: '#000',
+  },
+  ampmText: {
+    fontSize: RFValue(16),
+    color: colors.light, // Change to your preferred color
+    borderColor: colors.light,
+    borderLeftWidth: 1
+  },
+  icon: {
+    width: RFValue(18),
+    height: RFValue(18),
+    tintColor: colors.light,
+  },
+  datePickerContainer: {
+    marginTop: '5%',
+  },
+  datePicker: {
+    width: '100%',
+    borderColor: '#D8DADC',
+    borderWidth: 2,
+    borderRadius: 5,
+    padding: '3%',
+  },
+  datePickerLabel: {
+    position: 'absolute',
+    top: -30,
+    left: -6,
+    backgroundColor: '#fff',
+    paddingHorizontal: 5,
+    fontSize: RFValue(14),
+    color: 'black',
+  },
+  datePickerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  reminderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: '5%',
+  },
+  reminderText: {
+    fontSize: RFValue(12),
+    color: '#000',
+    marginRight: 'auto',
+    fontWeight: "bold"
+  },
+  reminderSubText: {
+    fontSize: RFValue(10),
+    color: 'black',
+    marginTop: 50,
+    marginRight: -1
+  },
+  infoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: '5%',
+  },
+  infoIcon: {
+    width: 25,
+    height: 25,
+    tintColor: colors.light,
+    marginRight: '2%',
+  },
+  infoText: {
+    fontSize: RFValue(12),
+    color: 'grey',
+    paddingRight: 50,
   },
 });

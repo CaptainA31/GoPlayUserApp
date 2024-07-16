@@ -486,7 +486,7 @@ const styles = StyleSheet.create({
   },
   button: {
     // borderColor: 'white',
-    backgroundColor: '#38B000',
+    backgroundColor: colors.light,
     // borderWidth: 1,
     height: 50,
     width: '100%',

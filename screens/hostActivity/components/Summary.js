@@ -43,7 +43,7 @@ const Summary = ({
     }
 
     return (
-        <View style={{paddingHorizontal : "3%"}}>
+        <View style={{paddingHorizontal : "3%", marginBottom: 30}}>
            <View style={styles.card}>
 
             <View style={styles.pictureContainer}>

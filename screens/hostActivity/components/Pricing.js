@@ -24,18 +24,18 @@ const Pricing = ({setPrice, price, paymentType, setPaymentType}) => {
         <Text style={{fontSize: RFValue(14), fontWeight: 'bold'}}>
           Cost Per Player
         </Text>
-        <View style={{marginTop: '5%'}}>
+        <View style={{marginTop: '2%'}}>
           <OutlinedTextField
             lineWidth={1}
             tintColor={colors.light}
             baseColor="grey"
-            textColor="grey"
+            textColor="black"
             keyboardType="numeric"
             value={price}
             containerStyle={{height: RFValue(45)}}
-            inputContainerStyle={{paddingRight: '20%', height: RFValue(45)}}
+            // inputContainerStyle={{paddingRight: '20%', height: RFValue(45)}}
             onChangeText={event => setPrice(event)}
-            label="350 PKR"
+            // label="350 PKR"
           />
         </View>
       </View>

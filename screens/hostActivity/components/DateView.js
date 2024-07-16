@@ -34,7 +34,7 @@ const DateView = ({onDateSelected , selectedMonth , dateRef , handleDateChange ,
           daySelectionAnimation={{
             type: 'background',
             duration: 200,
-            highlightColor: '#38B000',
+            highlightColor: colors.light,
           }}
           leftSelector={[]}
           rightSelector={[]}

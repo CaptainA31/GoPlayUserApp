@@ -65,6 +65,9 @@ const HostActivity = ({navigation}) => {
   const [alertBox, setAlertBox] = useState(false);
   const [back, setBack] = useState();
 
+  
+  const [activeTab, setActiveTab] = useState('Indoor Sports');
+
   // const dispatch = useDispatch();
 
   React.useEffect(
@@ -89,6 +92,10 @@ const HostActivity = ({navigation}) => {
       }),
     [navigation, activeSlot, isCompleted],
   );
+
+  const handleTabSwitch = tab => {
+    setActiveTab(tab);
+  };
 
   const handleSelection = item => {
     let array = selectedFacility.find(current => current == item);
@@ -300,7 +307,7 @@ const HostActivity = ({navigation}) => {
   };
 
   return (
-    <ImageBackground source={wallpaper} style={[screen]}>
+    <ImageBackground style={[screen]}>
       <Header onBack={() => navigation.pop()} heading={'Host an Activity'} />
 
       <AlertBox
@@ -332,16 +339,29 @@ const HostActivity = ({navigation}) => {
         setSelectedGroup={setSelectedGroup}
       />
 
-      <View style={{height: '80%', width: '100%', paddingHorizontal: '5%'}}>
+      <View style={{height: '80%', width: '100%', paddingHorizontal: '10%'}}>
         <ProgressSteps
           activeStep={activeSlot}
-          activeLabelColor={colors.light}
-          activeStepIconBorderColor={colors.light}
-          progressBarColor={colors.light}
-          completedProgressBarColor={colors.light}
-          completedStepIconColor={colors.light}
-          labelFontSize={12}>
+          // activeLabelColor={colors.light}
+          // activeStepIconBorderColor={colors.light}
+          // progressBarColor={colors.light}
+          // completedProgressBarColor={colors.light}
+          // completedStepIconColor={colors.light}
+          // labelFontSize={12}
+          >
           <ProgressStep label={'Sports'} removeBtnRow>
+          <View style={styles.tabContainer}>
+            <TouchableOpacity
+              style={[styles.tab, activeTab === 'Indoor Sports' ? styles.activeTab : null]}
+              onPress={() => handleTabSwitch('Indoor Sports')}>
+              <Text style={styles.tabText}>Indoor Sports</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.tab, activeTab === 'Outdoor Sports' ? styles.activeTab : null]}
+              onPress={() => handleTabSwitch('Outdoor Sports')}>
+              <Text style={styles.tabText}>Outdoor Sports</Text>
+            </TouchableOpacity>
+          </View>
             <SelectSports
               setSelectedSport={setSelectedSport}
               selectedSport={selectedSport}
@@ -417,27 +437,27 @@ const HostActivity = ({navigation}) => {
           </ProgressStep>
         </ProgressSteps>
       </View>
+      
       <View
         style={{
-          height: '12%',
+          height: '20%',
+          width: "100%",
+          marginTop: -30,
           justifyContent: 'center',
           paddingHorizontal: '10%',
           borderTopLeftRadius: RFValue(25),
           borderTopRightRadius: RFValue(25),
-          shadowColor: '#000',
+          backgroundColor: 'white',
+          // Shadow for iOS
+          shadowColor: 'black',
           shadowOffset: {
             width: 0,
             height: 4,
           },
-          shadowOpacity: 0.32,
-          shadowRadius: 5.46,
-          elevation: Platform.OS === 'android' ? 4 : 0, // Use elevation for Android
-          // iOS shadow properties
-          ...(Platform.OS === 'ios' && {
-            shadowOffset: {width: 0, height: -3},
-            shadowOpacity: 0.2,
-            shadowRadius: 3,
-          }),
+          
+          shadowOpacity: 0.1,
+          shadowRadius: 7.49,
+          elevation: 20,
         }}>
         {isCompleted ? (
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -453,11 +473,16 @@ const HostActivity = ({navigation}) => {
             </TouchableOpacity>
           </View>
         ) : (
-          <View style={{}}>
+          <View style={{
+            justifyContent: 'center',
+            borderTopLeftRadius: RFValue(25),
+            borderTopRightRadius: RFValue(25),
+            marginTop: -30
+          }}>
             <TouchableOpacity
               onPress={handleNext}
               disabled={loading}
-              style={{height: RFValue(45)}}>
+              style={styles.button}>
               {loading ? (
                 <Loader />
               ) : (
@@ -475,5 +500,42 @@ const HostActivity = ({navigation}) => {
 
 export default HostActivity;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  tabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginBottom: 20,
+    backgroundColor: '#EDEDED',
+    // marginHorizontal: '10%',
+    borderRadius: 15,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+  },
+  tab: {
+    padding: 10,
+    color: 'white',
+    //
+    width: '50%',
+    backgroundColor: '#EDEDED',
+  },
+  activeTab: {
+    // borderBottomWidth: 2,
+    // borderBottomColor: 'white',
+    backgroundColor: 'white',
+    borderRadius: 15,
+  },
+  tabText: {
+    fontSize: RFValue(12),
+    color: 'black',
+    // fontWeight: 'bold',
+    textAlign: 'center',
+    fontFamily: 'Poppins-Bold',
+  },
+  button: {
+    height: RFValue(45),
+    backgroundColor: colors.light,
+    borderRadius: 10
+  }
+});
 // do the same here
