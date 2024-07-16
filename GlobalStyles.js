@@ -1,9 +1,9 @@
 import { Platform, StatusBar } from "react-native";
 
 export const colors = {
-  // light: '#38B000',
+  light: "#38B000",
   dark : '#fcfcfc' ,
-  light: '#c3ee98',
+  // light: '#c3ee98',
   // dark : "#1D1A21" ,
   shade: '#ffebfb',
   lightBlack: '#CECECE',

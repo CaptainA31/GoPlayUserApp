@@ -53,7 +53,7 @@ const Venue = ({
   }, []);
 
   return (
-    <View style={{height: '100%', paddingHorizontal: '3%', zIndex: 0}}>
+    <View style={{height: '100%', paddingHorizontal: '3%', zIndex: 0, marginBottom: 30}}>
       <Text
         style={{
           fontSize: RFValue(14),
@@ -67,7 +67,7 @@ const Venue = ({
       <View
         style={{
           borderRadius: RFValue(8),
-          height: RFValue(45),
+          height: RFValue(40),
           borderColor: '#D8DADC',
           borderWidth: 1,
         }}>
@@ -83,7 +83,7 @@ const Venue = ({
             height: '100%',
             textAlignVertical: 'top',
             fontFamily: 'Poppins-Regular',
-            padding: 12
+            padding: 15
           }}
         />
       </View>
@@ -124,7 +124,7 @@ const Venue = ({
         {location ? (
           <Text
             style={{
-              color: "#38B000",
+              color: colors.light,
               fontSize: RFValue(14),
               paddingHorizontal: '10%',
             }}>
@@ -220,7 +220,7 @@ const Venue = ({
         />
       </View>
       <View style={{flexDirection: 'row', marginTop: 5}}>
-            <FontAwesome name="question-circle" size={24} color="#38B000" />
+            <FontAwesome name="question-circle" size={24} color={colors.light} />
           <Text style={{color: 'grey', fontFamily: 'Poppins-Regular', marginLeft: 10}}>
           please add details for the pitch?court to assist the players identify the pitch/court at venue. Example for football : 7X7 Pitch 1
           </Text>

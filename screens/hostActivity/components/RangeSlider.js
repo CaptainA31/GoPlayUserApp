@@ -66,7 +66,7 @@
 
 // const styles = StyleSheet.create({})
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {OutlinedTextField} from 'rn-material-ui-textfield';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {colors} from '../../../GlobalStyles';
@@ -96,8 +96,12 @@ const RangeSlider = ({setAge}) => {
   };
 
   return (
-    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-      <View style={{width: '49%'}}>
+  <View> 
+    <View style={styles.confirmTitle}>
+      <Text style={styles.sectionsubTitle}>Min Age</Text>
+      <Text style={styles.sectionsubTitle}>Max Age</Text>
+    </View>
+    <View style={styles.inputRow}>
         <OutlinedTextField
           lineWidth={1}
           tintColor={colors.light}
@@ -105,13 +109,11 @@ const RangeSlider = ({setAge}) => {
           textColor="black"
           keyboardType="numeric"
           value={minAge}
-          containerStyle={{height: RFValue(45)}}
-          inputContainerStyle={{paddingHorizontal: '5%', height: RFValue(45)}}
+          containerStyle={styles.inputContainer}
+          // inputContainerStyle={{paddingHorizontal: '5%', height: RFValue(45)}}
           onChangeText={handleMinAgeChange}
-          label="Min Age"
+          // label="Min Age"
         />
-      </View>
-      <View style={{width: '49%'}}>
         <OutlinedTextField
           lineWidth={1}
           tintColor={colors.light}
@@ -119,14 +121,51 @@ const RangeSlider = ({setAge}) => {
           textColor="black"
           keyboardType="numeric"
           value={maxAge}
-          containerStyle={{height: RFValue(45)}}
-          inputContainerStyle={{paddingHorizontal: '5%', height: RFValue(45)}}
+          containerStyle={styles.inputContainer}
+          // inputContainerStyle={{paddingHorizontal: '5%', height: RFValue(45)}}
           onChangeText={handleMaxAgeChange}
-          label="Max Age"
-        />
-      </View>
+          // label="Max Age"
+          />
+          </View>
     </View>
   );
 };
 
 export default RangeSlider;
+
+
+const styles = StyleSheet.create({
+  sectionTitle: {
+    fontWeight: 'bold',
+    fontSize: RFValue(14),
+    marginBottom: 10,
+  },
+  sectionsubTitle: {
+    fontSize: RFValue(12),
+    marginBottom: 2,
+    flex: 1,
+    flexDirection: 'row',
+  },
+  confirmTitle: {
+    flex: 1,
+    flexDirection: 'row',
+    fontSize: RFValue(12),
+    marginBottom: 2,
+  },
+  sectionContainer: {
+    marginTop: '4%',
+  },
+  selected: {
+    backgroundColor: colors.light,
+  },
+  inputRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: '2%',
+  },
+  inputContainer: {
+    width: '49%',
+    height: RFValue(45),
+  },
+})

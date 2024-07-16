@@ -57,7 +57,7 @@ const OtpVerification = ({ navigation }) => {
             key={index}
             style={[
               styles.otpInput,
-              digit && { borderColor: '#38B000', color: '#38B000' }
+              digit && { borderColor: colors.light, color: colors.light }
             ]}
             value={digit}
             onChangeText={(value) => handleChange(value, index)}
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     borderColor: '#F4F4F4',
   },
   button: {
-    backgroundColor: '#38B000',
+    backgroundColor: colors.light,
     height: 50,
     width: '80%',
     justifyContent: 'center',

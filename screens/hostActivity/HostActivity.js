@@ -534,7 +534,7 @@ const styles = StyleSheet.create({
   },
   button: {
     height: RFValue(45),
-    backgroundColor: "#38B000",
+    backgroundColor: colors.light,
     borderRadius: 10
   }
 });

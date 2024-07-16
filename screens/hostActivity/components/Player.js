@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  FlatList,
 } from 'react-native';
 import {OutlinedTextField} from 'rn-material-ui-textfield';
 import {colors} from '../../../GlobalStyles';
@@ -15,13 +16,12 @@ import RadioForm, {
   RadioButtonLabel,
 } from 'react-native-simple-radio-button';
 import {RFValue} from 'react-native-responsive-fontsize';
-import {LinearGradient} from 'expo-linear-gradient';
 import info from '../../../assets/info.png';
 import SkillsDropdown from '../components/SkillsDropDown'; // Import the SkillsDropdown component
 
 var radio_props = [
   {label: 'Public', value: 0},
-  {label: 'Invites Only', value: 1},
+  {label: 'Invite Only', value: 1},
 ];
 
 const Player = ({
@@ -54,7 +54,7 @@ const Player = ({
   const checkMultiple = item => {
     return skills === item;
   };
-  
+
   const checkGender = item => {
     return gender === item;
   };
@@ -64,102 +64,105 @@ const Player = ({
     setEventType(value);
   };
 
+  const renderPlayer = ({item}) => (
+    <View style={styles.playerAvatar}>
+      {item.image ? (
+        <Image source={item.image} style={styles.playerImage} />
+      ) : (
+        <View style={styles.emptyAvatar} />
+      )}
+      <Text style={styles.playerName}>{item.name}</Text>
+    </View>
+  );
+
+  const players = [
+    {name: 'Haleema', image: null},
+    {name: 'Ahmed', image: null},
+    {name: 'Saad', image: null},
+    {name: 'Sara', image: null},
+  ];
+
   return (
-    <View>
-      <Text style={{fontWeight: 'bold'}}>Skills</Text>
+    <View style={styles.screen}>
+      <Text style={styles.sectionTitle}>Skills</Text>
       <View style={styles.skillsContainer}>
         {skillsType.map((item, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => handleSkills(item)}
-            style={{width: '32%'}}>
-            <LinearGradient
-              colors={
-                checkMultiple(item)
-                  ? ['white', 'white']
-                  : [colors.light, colors.dark]
-              }
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              style={checkMultiple(item) ? styles.button : styles.selected}>
-              <Text style={{color: checkMultiple(item) ? 'black' : 'white'}}>
-                {item}
-              </Text>
-            </LinearGradient>
+            style={[
+              styles.button,
+              checkMultiple(item) && styles.selected,
+            ]}>
+            <Text style={{color: checkMultiple(item) ? 'white' : 'black'}}>
+              {item}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
 
-      <View style={{marginTop: '4%'}}>
-        <Text style={{fontWeight: 'bold'}}>Players</Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginTop: '2%',
-        }}>
-        <View style={{width: '49%'}}>
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>Players</Text>
+        <View style={styles.confirmTitle}>
+          <Text style={styles.sectionsubTitle}>Total Players</Text>
+          <Text style={styles.sectionsubTitle}>Confirmed Players</Text>
+        </View>
+        
+        <View style={styles.inputRow}>
           <OutlinedTextField
             lineWidth={1}
             tintColor={colors.light}
             baseColor="grey"
-            textColor="grey"
+            textColor="black"
             keyboardType="numeric"
             value={total}
-            containerStyle={{height: RFValue(45)}}
-            inputContainerStyle={{paddingRight: '20%', height: RFValue(45)}}
+            containerStyle={styles.inputContainer}
+            // inputContainerStyle={styles.inputInnerContainer}
             onChangeText={event => setTotal(event)}
-            label="Total"
+            // label="Total Players"
           />
-        </View>
-        <View style={{width: '49%'}}>
           <OutlinedTextField
             lineWidth={1}
             tintColor={colors.light}
             baseColor="grey"
-            textColor="grey"
+            textColor="black"
             keyboardType="numeric"
             value={confirmed}
-            containerStyle={{height: RFValue(45)}}
-            inputContainerStyle={{paddingRight: '20%', height: RFValue(45)}}
+            containerStyle={styles.inputContainer}
+            // inputContainerStyle={styles.inputInnerContainer}
             onChangeText={event => setConfirmed(event)}
-            label="Confirmed"
+            // label="Confirmed Players"
           />
         </View>
       </View>
-      <View style={{marginVertical: '2%'}}>
-        <Text style={{fontWeight: 'bold'}}>Age</Text>
+
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>Age</Text>
+        <RangeSlider setAge={setAge} />
       </View>
-      <RangeSlider setAge={setAge} />
-      <View style={{marginTop: '3%'}}>
-        <Text style={{fontWeight: 'bold'}}>Gender</Text>
+
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>Gender</Text>
         <View style={styles.skillsContainer}>
           {genderType.map((item, index) => (
             <TouchableOpacity
               key={index}
               onPress={() => handleGender(item)}
-              style={{width: '32%'}}>
-              <LinearGradient
-                colors={
-                  checkGender(item)
-                    ? ['white', 'white']
-                    : [colors.light, colors.dark]
-                }
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                style={checkGender(item) ? styles.button : styles.selected}>
-                <Text style={{color: checkGender(item) ? 'black' : 'white'}}>
-                  {item}
-                </Text>
-              </LinearGradient>
+              style={[
+                styles.button,
+                checkGender(item) && styles.selected,
+              ]}>
+              <Text style={{color: checkGender(item) ? 'white' : 'black'}}>
+                {item}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
       </View>
-      <View style={{marginTop: '3%'}}>
-        <Text style={{fontWeight: 'bold'}}>Event Type</Text>
-        <View style={{marginTop: '2%'}}>
+
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>Event Type</Text>
+        <View style={styles.radioContainer}>
           <RadioForm formHorizontal={true} animation={true}>
             {radio_props.map((obj, i) => (
               <RadioButton labelHorizontal={true} key={i}>
@@ -193,7 +196,7 @@ const Player = ({
                       setEventType(value);
                     }
                   }}
-                  labelStyle={{fontSize: RFValue(15), color: 'black'}}
+                  labelStyle={{fontSize: RFValue(12), color: 'black'}}
                   labelWrapStyle={{}}
                 />
               </RadioButton>
@@ -201,42 +204,31 @@ const Player = ({
           </RadioForm>
         </View>
 
-        <View
-          style={{
-            marginTop: '0%',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginBottom: '5%',
-          }}>
-          <View style={{width: 25, height: 25, marginRight: '2%'}}>
-            <Image
-              source={info}
-              resizeMode="contain"
-              style={{width: '100%', height: '100%', tintColor: colors.light}}
-            />
-          </View>
-          <View style={{marginTop: '5%'}}>
-            <Text
-              style={{
-                fontSize: RFValue(11),
-                color: 'black',
-                paddingRight: 50,
-                marginBottom: '2%',
-              }}>
+        <View style={styles.infoContainer}>
+          <Image source={info} resizeMode="contain" style={styles.infoIcon} />
+          <View>
+            <Text style={styles.infoText}>
               <Text style={{fontWeight: 'bold'}}>Public</Text>: This activity
               can be discovered by all players on GoPlay
             </Text>
-            <Text
-              style={{
-                fontSize: RFValue(11),
-                color: 'black',
-                paddingRight: 50,
-              }}>
-              <Text style={{fontWeight: 'bold'}}>Invites Only</Text>: This
+            <Text style={styles.infoText}>
+              <Text style={{fontWeight: 'bold'}}>Invite Only</Text>: This
               activity will be restricted to invited players only
             </Text>
           </View>
         </View>
+      </View>
+
+      <View style={styles.playersContainer}>
+        <FlatList
+          data={players}
+          horizontal
+          renderItem={renderPlayer}
+          keyExtractor={(item, index) => index.toString()}
+        />
+        <TouchableOpacity onPress={() => {}}>
+          <Text style={styles.viewAllText}>view all</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -245,27 +237,109 @@ const Player = ({
 export default Player;
 
 const styles = StyleSheet.create({
+  screen: {
+    marginBottom: 40
+  },
+  sectionTitle: {
+    fontWeight: 'bold',
+    fontSize: RFValue(14),
+    marginBottom: 10,
+  },
+  sectionsubTitle: {
+    fontSize: RFValue(12),
+    marginBottom: 2,
+    flex: 1,
+    flexDirection: 'row',
+  },
+  confirmTitle: {
+    flex: 1,
+    flexDirection: 'row',
+    fontSize: RFValue(12),
+    marginBottom: 2,
+  },
+  sectionContainer: {
+    marginTop: '4%',
+  },
   skillsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: '3%',
+    width: "25%",
   },
   button: {
-    width: '100%',
+    width: '120%',
     height: RFValue(45),
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: colors.light,
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 10,
+    backgroundColor: colors.dark,
+    marginHorizontal: 5,
+    padding: 5,
   },
   selected: {
-    width: '100%',
-    height: RFValue(45),
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: colors.light,
-    borderWidth: 1,
-    borderRadius: 5,
+  },
+  inputRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: '2%',
+  },
+  inputContainer: {
+    width: '49%',
+    height: RFValue(45),
+  },
+  inputInnerContainer: {
+    paddingRight: '20%',
+    height: RFValue(45),
+  },
+  radioContainer: {
+    marginTop: '2%',
+  },
+  infoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: '5%',
+  },
+  infoIcon: {
+    width: 25,
+    height: 25,
+    tintColor: colors.light,
+    marginRight: '2%',
+    marginTop: -40
+  },
+  infoText: {
+    fontSize: RFValue(11),
+    color: 'black',
+    paddingRight: 50,
+  },
+  playersContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: '5%',
+  },
+  playerAvatar: {
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
+  playerImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  emptyAvatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: 'grey',
+  },
+  playerName: {
+    fontSize: RFValue(12),
+    marginTop: 5,
+  },
+  viewAllText: {
+    color: colors.light,
+    marginLeft: 10,
   },
 });

@@ -51,8 +51,8 @@ const SelectSports = ({ selectedSport, setSelectedSport }) => {
                   style={[
                     styles.ballCircle,
                     {
-                      borderColor: isSelected(item) ? '#38B000' : colors.grey,
-                      // backgroundColor: isSelected(item) ? '#38B000' : 'white',
+                      borderColor: isSelected(item) ? colors.light : colors.grey,
+                      // backgroundColor: isSelected(item) ? colors.light : 'white',
                     },
                   ]}
                 >
