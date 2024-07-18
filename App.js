@@ -105,7 +105,7 @@ export default function App() {
         <Stack.Screen name="getPhone" component={GetPhone} />
         <Stack.Screen name="getEmail" component={GetEmail} />
         <Stack.Screen name="hostActivity" component={HostActivity} />
-        <Stack.Screen name="groups" component={Groups} />
+        <Stack.Screen name="Groups" component={Groups} />
         <Stack.Screen name="offers" component={Offers} />
         <Stack.Screen name="createGroup" component={CreateGroup} />
         <Stack.Screen name="community" component={Community} />
