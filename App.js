@@ -101,7 +101,6 @@ export default function App() {
         <Stack.Screen name="otp" component={OtpVerification} />
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="signin" component={SignIn} />
-        <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="signup" component={SignUp} />
         <Stack.Screen name="getPhone" component={GetPhone} />
         <Stack.Screen name="getEmail" component={GetEmail} />
@@ -110,7 +109,6 @@ export default function App() {
         <Stack.Screen name="offers" component={Offers} />
         <Stack.Screen name="createGroup" component={CreateGroup} />
         <Stack.Screen name="community" component={Community} />
-        <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />
         <Stack.Screen name="leaderBoard" component={LeaderBoard} />
         <Stack.Screen name="train" component={Train} />
         <Stack.Screen name="transferMoney" component={TransferMoney} />
