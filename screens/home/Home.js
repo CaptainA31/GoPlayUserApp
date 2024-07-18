@@ -13,7 +13,7 @@ import {
   Pressable,
   SafeAreaView,
   Platform,
-  // StatusBar
+  StatusBar
 } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { colors, imageStyle, screen } from '../../GlobalStyles';
@@ -65,7 +65,7 @@ const Home = ({ drawerAnimationStyle, navigation }) => {
 
   const cardData = [
     { title: 'Host Activity', icon: activity, navigation: 'hostActivity' },
-    { title: 'Groups', icon: groups, navigation: 'groups' },
+    { title: 'Groups', icon: groups, navigation: 'Groups' },
     { title: 'Offers', icon: offer, navigation: 'offers' },
     { title: 'Community', icon: community, navigation: 'community' },
     { title: 'LeaderBoard', icon: leaderboardIcon, navigation: 'leaderBoard' },
