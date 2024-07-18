@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 import Header from '../../components/Header';
 import {colors, screen} from '../../GlobalStyles';
-import {ProgressSteps, ProgressStep} from 'react-native-progress-steps';
+import ProgressSteps from '../hostActivity/components/ProgressSteps/ProgressSteps';
+import ProgressStep from '../hostActivity/components/ProgressSteps/ProgressStep';
+
 import Button from '../../components/Button';
 import SelectSports from './components/SelectSports';
 import Venue from './components/Venue';
@@ -339,7 +341,7 @@ const HostActivity = ({navigation}) => {
         setSelectedGroup={setSelectedGroup}
       />
 
-      <View style={{height: '80%', width: '100%', paddingHorizontal: '10%'}}>
+      <View style={{height: '80%', width: '100%', paddingHorizontal: '10%', }}>
         <ProgressSteps
           activeStep={activeSlot}
           // activeLabelColor={colors.light}
